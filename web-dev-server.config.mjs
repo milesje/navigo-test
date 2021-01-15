@@ -1,7 +1,8 @@
-// import { hmrPlugin, presets } from '@open-wc/dev-server-hmr';
-
+import rollupReplace from '@rollup/plugin-replace';
+import { fromRollup } from '@web/dev-server-rollup';
 /** Use Hot Module replacement by adding --hmr to the start command */
 const hmr = process.argv.includes('--hmr');
+const replace = fromRollup(rollupReplace);
 
 export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
   nodeResolve: true,
@@ -20,12 +21,9 @@ export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
   },
 
   plugins: [
-    /** Use Hot Module Replacement by uncommenting. Requires @open-wc/dev-server-hmr plugin */
-    hmr &&
-      hmrPlugin({
-        exclude: ['**/*/node_modules/**/*'],
-        presets: [presets.litElement],
-      }),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+    }),
   ],
 
   // See documentation for all available options
