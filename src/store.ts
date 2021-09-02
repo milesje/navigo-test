@@ -1,9 +1,14 @@
 import { html, TemplateResult } from 'lit-element';
+import { Magic } from 'magic-sdk';
 import { makeObservable, observable } from 'mobx';
 import Navigo from 'navigo';
+
 class MobxStore {
   router = new Navigo('/');
+
   route: TemplateResult = html``;
+
+  m = new Magic('API_KEY');
 
   constructor() {
     makeObservable(this, { route: observable });
